@@ -85,7 +85,7 @@ type IntegrationLogsResponse struct {
 
 type IntegrationLog struct {
 	AppID       string `json:"app_id"`
-	ServiceID   string `json:"service_id"`
+	ServiceID   int    `json:"service_id"`
 	ServiceType string `json:"service_type"`
 	UserID      string `json:"user_id"`
 	UserName    string `json:"user_name"`
