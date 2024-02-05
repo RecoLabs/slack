@@ -107,7 +107,17 @@ type AuditLogParameters struct {
 
 func (api *Client) auditLogsRequest(ctx context.Context, path string, values url.Values) (*AuditLogResponse, error) {
 	response := &AuditLogResponse{}
-	err := api.getMethod(ctx, path, api.token, values, response)
+	apiCopyWithCorrectAuditEndPoint := &Client{
+		token:              api.token,
+		appLevelToken:      api.appLevelToken,
+		configToken:        api.configToken,
+		configRefreshToken: api.configRefreshToken,
+		endpoint:           "https://api.slack.com/",
+		debug:              api.debug,
+		log:                api.log,
+		httpclient:         api.httpclient,
+	}
+	err := apiCopyWithCorrectAuditEndPoint.getMethod(ctx, path, api.token, values, response)
 	if err != nil {
 		return nil, err
 	}
