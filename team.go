@@ -83,18 +83,7 @@ type IntegrationLogsResponse struct {
 	SlackResponse
 }
 
-type IntegrationLog struct {
-	AppID       string `json:"app_id"`
-	ServiceID   string `json:"service_id"`
-	ServiceType string `json:"service_type"`
-	UserID      string `json:"user_id"`
-	UserName    string `json:"user_name"`
-	Channel     string `json:"channel"`
-	Date        int    `json:"date"`
-	ChangeType  string `json:"change_type"`
-	Scope       string `json:"scope"`
-	Reason      string `json:"reason"`
-}
+type IntegrationLog struct{}
 
 type BillableInfoResponse struct {
 	BillableInfo map[string]BillingActive `json:"billable_info"`
@@ -318,13 +307,22 @@ func (api *Client) GetIntegrationLogs(params IntegrationLogsParameters) (*Integr
 
 // GetAccessLogsContext retrieves a page of logins according to the parameters given with a custom context
 func (api *Client) GetIntegrationLogsContext(ctx context.Context, params IntegrationLogsParameters) (*IntegrationLogsResponse, error) {
-	values := url.Values{
-		"token":       {api.token},
-		"app_id":      {params.AppID},
-		"change_type": {params.ChangeType},
-		"service_id":  {params.ServiceID},
-		"team_id":     {params.TeamID},
-		"user":        {params.User},
+	values := url.Values{}
+	if params.AppID != "" {
+		values.Add("app_id", params.AppID)
+	}
+	if params.ChangeType != "" {
+		values.Add("change_type", params.ChangeType)
+	}
+	if params.ServiceID != "" {
+		values.Add("service_id", params.ServiceID)
+	}
+	if params.TeamID != "" {
+		values.Add("team_id", params.TeamID)
+	}
+	if params.User != "" {
+		values.Add("user", params.User)
+
 	}
 	if params.Count != DEFAULT_LOGINS_COUNT {
 		values.Add("count", strconv.Itoa(params.Count))
