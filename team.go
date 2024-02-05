@@ -83,18 +83,7 @@ type IntegrationLogsResponse struct {
 	SlackResponse
 }
 
-type IntegrationLog struct {
-	AppID       string `json:"app_id"`
-	ServiceID   int    `json:"service_id"`
-	ServiceType string `json:"service_type"`
-	UserID      string `json:"user_id"`
-	UserName    string `json:"user_name"`
-	Channel     string `json:"channel"`
-	Date        int    `json:"date"`
-	ChangeType  string `json:"change_type"`
-	Scope       string `json:"scope"`
-	Reason      string `json:"reason"`
-}
+type IntegrationLog struct{}
 
 type BillableInfoResponse struct {
 	BillableInfo map[string]BillingActive `json:"billable_info"`
